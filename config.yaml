@@ -1,0 +1,117 @@
+directory: /music
+library: /config/musiclibrary.blb
+#This sets where I want my music stored (directory), and where the database file is located (library).
+
+plugins: the fetchart embedart scrub extrafiles lastgenre discogs inline
+#These are the plugins that I use to maintain my metadata. "the" is able to recognize prefixes in artist names, and move them to the end of the string. "fetchart" and "embedart" are relatively self-explanatory. "scrub" clears all metadata before applying the new, clean metadata.
+
+
+import:
+    move: no
+    copy: yes
+    resume: ask
+    incremental: yes
+    timid: yes
+    log: /config/import.log
+#When I use the "import" command, I want beets to move the files, not copy them. This is because I run beets in my downloads folder, where I download all of my music to, and want those files to be moved neatly into my music drive.
+
+ui:
+    color: yes
+#Beets color-codes its information in the command prompt. I found this somewhat ugly to look at, so I turned it off.
+
+per_disc_numbering: yes
+#By default, if there are two discs in an album, beets will ignore the fact that there's two discs. If there's 10 songs in disc 1, and 10 in disc 2, the first track of disc 2 is numbered as 11. I want my discs tagged separately, so track 1 of disc 2 starts over as track 1.
+
+threaded: yes
+#Self-explanatory
+detail: yes
+
+format_item: $year%if{$month,-$month%if{$day,-$day}} - %the{$albumartist} - $album - $title
+format_album: $year%if{$month,-$month%if{$day,-$day}} - %the{$albumartist} - $album
+
+paths:
+    genre:Christmas: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
+    genre:Classical: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $title
+    default: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
+    comp: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
+
+#################################################################################################################
+
+# Begin Plugins Config
+
+item_fields:
+    multidisc: 1 if disctotal > 1 else 0
+
+fetchart:
+    midwidth: 400
+    enforce_ratio: 10px
+    sources: filesystem itunes amazon albumart coverart inline
+#This is the arguments for the fetchart plugin. The minimum width of the downloaded album art is 400 pixels. The maximum deviation from perfectly square the photo can have is 10px, either vertically or horizontally. The sources are a list of where beets will look for album art, starting at the left and going to the right. I put filesystem first so beets checks my files for a cover first, and only goes onto the internet to find one if there isn't one already.
+
+embedart:
+    auto: no
+#Embed art is great, but it slows down the import process a lot. I run the command when I want to and have a lot of time to spare. I do not want it to automatically run when I import my music.
+
+extrafiles:
+    patterns:
+        artworkdir:
+            - '[sS]cans/'
+            - '[sS]can/'
+            - '[aA]rtwork/'
+            - '[cC]over/'
+            - '[cC]overs/'
+            - '[pP]icutres/'
+        artworkfiles:
+          - '*.png'
+          - '*.jpg'
+          - '*.jpeg'
+          - '*.gif'
+          - '*.pdf'
+        datafiles:
+          - '*.log'
+          - '*.txt'
+          - '*.md5'
+          - '*.ffp'
+          - '*.cue'
+          - '*.CUE'
+          - '*.nfo'
+          - '*.st5'
+          - '*.auCDtect'
+          - '*.accurip'
+          - '*.sfv'
+          - '*.xml'
+        extradir:
+            - '[eE]xtras/'
+#        extrafiles:
+#          - '[eE]xtras/*.log'
+#          - '[eE]xtras/*.txt'
+#          - '[eE]xtras/*.md5'
+#          - '[eE]xtras/*.ffp'
+#          - '[eE]xtras/*.cue'
+#          - '[eE]xtras/*.CUE'
+#          - '[eE]xtras/*.nfo'
+#          - '[eE]xtras/*.st5'
+
+    paths:
+        artworkdir: $albumpath/Artwork
+        extradir: $albumpath/Data
+        artworkfiles: $albumpath/Artwork/$filename
+#        extrafiles: $albumpath/Data/$filename
+        datafiles: $albumpath/Data/$filename
+
+lastgenre:                                          # get genre's from last.fm
+    auto:               yes                         # default: yes
+    source:             album                       # default: album
+    count:              4                          # only 2 genre please
+    force:              no                         # in whitelist? make it canonical
+    whitelist:          yes                         # default: yes
+    canonical:          yes                         # default: no
+    fallback:           'Unknown'                   # reset genre if we don't find one
+    separator:          '; '
+    prefer_specific:    yes
+    min_weight:         40
+    canonical:          /config/canonical-genre.yaml
+    whitelist:          /config/genres.txt
+discogs:
+    user_token: XTYuTiqtHSVoESzzapJDeDGzpeZRCGSZSrJNBQSn
+
