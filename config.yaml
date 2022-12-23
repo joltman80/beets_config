@@ -31,6 +31,8 @@ format_album: $year%if{$month,-$month%if{$day,-$day}} - %the{$albumartist} - $al
 
 paths:
     genre:Christmas: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
+    genre:Holiday: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
+    genre:Holidays: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
     genre:Classical: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $title
     default: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
     comp: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
