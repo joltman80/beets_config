@@ -1,0 +1,13 @@
+#These are the plugins that I use to maintain my metadata.
+
+plugins:
+  [
+  the,  # Able to recognize prefixes in artist names, and move them to the end of the string.
+  fetchart,  # Retrieves album art images from various sources on the Web and stores them as image files.
+  embedart,  # Embed the album art directly into each file’s metadata.
+  scrub,  # Clears all metadata before applying the new, clean metadata.
+  extrafiles,  # Finds the defined extra files in the incoming folder and copies them to the output folder in a specific folder.
+  lastgenre,  # Fetches tags from Last.fm and assigns them as genres to your albums and items.
+  discogs,  # Uses DISCOGS (with your usertoken) to find album metadata
+  inline,  # Lets you use Python to customize your path formats. Using it, you can define template fields in your beets configuration file and refer to them from your template strings in the paths: section
+  ]
