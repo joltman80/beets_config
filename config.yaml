@@ -1,10 +1,11 @@
+include:                     # A list of extra configuration files to include.
+                             # IMPORTANT: Most configurations doesn't seem to work in external files, so leave them here.
+  - secrets.yaml             # Secret strings (REDACTED) like usernames and passwords. Add this file to git.ignore.
+  - plugins.yaml             # Activate/deactivate plugins here.
+
 directory: /music
 library: /config/musiclibrary.blb
 #This sets where I want my music stored (directory), and where the database file is located (library).
-
-plugins: the fetchart embedart scrub extrafiles lastgenre discogs inline
-#These are the plugins that I use to maintain my metadata. "the" is able to recognize prefixes in artist names, and move them to the end of the string. "fetchart" and "embedart" are relatively self-explanatory. "scrub" clears all metadata before applying the new, clean metadata.
-
 
 import:
     move: no
@@ -114,6 +115,3 @@ lastgenre:                                          # get genre's from last.fm
     min_weight:         40
     canonical:          /config/canonical-genre.yaml
     whitelist:          /config/genres.txt
-discogs:
-    user_token: XTYuTiqtHSVoESzzapJDeDGzpeZRCGSZSrJNBQSn
-
