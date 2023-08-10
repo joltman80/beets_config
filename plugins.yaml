@@ -10,4 +10,5 @@ plugins:
   lastgenre,  # Fetches tags from Last.fm and assigns them as genres to your albums and items.
   discogs,  # Uses DISCOGS (with your usertoken) to find album metadata
   inline,  # Lets you use Python to customize your path formats. Using it, you can define template fields in your beets configuration file and refer to them from your template strings in the paths: section
+  parentwork,      # Fetches the work title, parent work title and parent work composer from MusicBrainz.
   ]
