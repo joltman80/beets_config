@@ -2,10 +2,7 @@ include:                     # A list of extra configuration files to include.
                              # IMPORTANT: Most configurations doesn't seem to work in external files, so leave them here.
   - secrets.yaml             # Secret strings (REDACTED) like usernames and passwords. Add this file to git.ignore.
   - plugins.yaml             # Activate/deactivate plugins here.
-
-directory: /music
-library: /config/musiclibrary.blb
-#This sets where I want my music stored (directory), and where the database file is located (library).
+  - local.yaml               # Define Local Folders
 
 import:
     move: no
@@ -14,6 +11,7 @@ import:
     incremental: yes
     timid: yes
     log: /config/import.log
+    from_scratch: yes
 #When I use the "import" command, I want beets to move the files, not copy them. This is because I run beets in my downloads folder, where I download all of my music to, and want those files to be moved neatly into my music drive.
 
 ui:
@@ -34,7 +32,8 @@ paths:
     genre:Christmas: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
     genre:Holiday: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
     genre:Holidays: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
-    genre:Classical: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $title
+    genre:Classical: music/$parent_composer/$year%if{$month,-$month%if{$day,-$day}} - $parentwork($parentwork_disambig)%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $title
+    genre:Childrens: Children's Music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
     default: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
     comp: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
 
@@ -115,3 +114,15 @@ lastgenre:                                          # get genre's from last.fm
     min_weight:         40
     canonical:          /config/canonical-genre.yaml
     whitelist:          /config/genres.txt
+
+parentwork:                  # This plugin adds five tags:
+                             # - parentwork: The title of the parent work.
+                             # - mb_parentworkid: The musicbrainz id of the parent work.
+                             # - parentwork_disambig: The disambiguation of the parent work title.
+                             # - parent_composer: The composer of the parent work.
+                             # - parent_composer_sort: The sort name of the parent work composer.
+                             # - work_date: The composition date of the work, or the first parent work that has a composition date. Format: yyyy-mm-dd.
+    force: no                  # As a default, parentwork only fetches work info for recordings that do not already have a parentwork tag.
+                             # If force is enabled, it fetches it for all recordings. Default: no.
+    auto: yes                  # If enabled, automatically fetches works at import.
+                             # It takes quite some time, because beets is restricted to one musicbrainz query per second. Default: no.

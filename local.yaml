@@ -1,0 +1,4 @@
+# Add local folders here.
+directory: /music
+library: /config/musiclibrary.blb
+#This sets where I want my music stored (directory), and where the database file is located (library).
