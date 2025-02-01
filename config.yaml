@@ -32,10 +32,15 @@ paths:
     genre:Christmas: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
     genre:Holiday: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
     genre:Holidays: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
+    genre:christmas: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
+    genre:holiday: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
+    genre:holidays: Christmas/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $artist_credit - $title
     genre:Classical: music/$parent_composer/$year%if{$month,-$month%if{$day,-$day}} - $parentwork($parentwork_disambig)%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $title
+    genre:classical: music/$parent_composer/$year%if{$month,-$month%if{$day,-$day}} - $parentwork($parentwork_disambig)%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track - $title
     genre:Childrens: Children's Music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
+    albumtype:soundtrack: music/Soundtracks/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
+    comp: music/Various Artists/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
     default: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
-    comp: music/%the{$albumartist}/$year%if{$month,-$month%if{$day,-$day}} - $album%aunique{}%if{$catalognum, [$catalognum]}/%if{$multidisc,$disc}$track%if{$artist_credit, - $artist_credit} - $title
 
 #################################################################################################################
 
@@ -104,7 +109,7 @@ extrafiles:
 lastgenre:                                          # get genre's from last.fm
     auto:               yes                         # default: yes
     source:             album                       # default: album
-    count:              4                          # only 2 genre please
+    count:              4                          # only 4 genre please
     force:              no                         # in whitelist? make it canonical
     whitelist:          yes                         # default: yes
     canonical:          yes                         # default: no
